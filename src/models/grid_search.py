@@ -5,6 +5,7 @@ from sklearn.metrics import mean_squared_error
 import joblib
 import numpy as np
 import os
+import yaml
 
 def main():
     # Load data
@@ -17,16 +18,21 @@ def main():
     y_train = np.ravel(y_train)
     y_test = np.ravel(y_test)
 
+    # Load parameters from params.yaml
+    with open("params.yaml", "r") as f:
+        params = yaml.safe_load(f)
+
+    # Extract parameters for grid search
+    param_grid = {
+        "n_estimators": params["gridsearch"]["n_estimators"],
+        "max_depth": params["gridsearch"]["max_depth"],
+        "min_samples_split": params["gridsearch"]["min_samples_split"],
+        "min_samples_leaf": params["gridsearch"]["min_samples_leaf"],
+    }
+  
     # regressor
     regressor = RandomForestRegressor(random_state=42, n_jobs=-1)
 
-    # parameters for GridSearchCV
-    param_grid = {
-        "n_estimators": [100, 200, 300],
-        "max_depth": [None, 10, 20, 30],
-        "min_samples_split": [2, 5, 10],
-        "min_samples_leaf": [1, 2, 4],
-    }
 
     # GridSearchCV
     grid_search = GridSearchCV(
@@ -48,14 +54,14 @@ def main():
     print(f"Best Cross-Validated MSE: {best_score}")
 
     # Train the best model
-    best_model = grid_search.best_estimator_
-    best_model.fit(X_train, y_train)
+    #best_model = grid_search.best_estimator_
+    #best_model.fit(X_train, y_train)
 
-    # Save the best model to the models directory
-    model_filename = './models/best_params.pkl'
-    os.makedirs(os.path.dirname(model_filename), exist_ok=True)
-    joblib.dump(best_model, model_filename)
-    print(f"Best model saved successfully to {model_filename}.")
+    # Save the best parameters to the models directory
+    param_filename = './models/best_params.pkl'
+    os.makedirs(os.path.dirname(param_filename), exist_ok=True)
+    joblib.dump(best_params, param_filename)
+    print(f"Best params saved successfully to {param_filename}.")
 
 if __name__ == "__main__":
     main()
