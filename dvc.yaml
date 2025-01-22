@@ -46,4 +46,6 @@ stages:
     - src/models/evaluate.py
     outs:
     - data/prediction.csv
-    - metrics/scores.json
+    metrics:
+    - metrics/scores.json:
+        cache: false
