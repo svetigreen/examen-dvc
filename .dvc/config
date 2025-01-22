@@ -1,8 +1,7 @@
 [core]
     analytics = false
-    remote = s3_remote
+    remote = origin
 ['remote "origin"']
-    url = https://dagshub.com/svetigreen/examen-dvc.dvc
-['remote "s3_remote"']
     url = s3://dvc
     endpointurl = https://dagshub.com/svetigreen/examen-dvc.s3
+
