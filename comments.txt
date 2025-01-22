@@ -31,3 +31,13 @@ dvc stage add -n normalize `
     -o data/processed_data/X_train_scaled.csv `
     -o data/processed_data/X_test_scaled.csv `
     python src/data/normalize_data.py data/processed_data data/processed_data
+
+3d stage:
+dvc stage add -n gridsearch `
+    -d src/models/grid_search.py `
+    -d data/processed_data/X_train_scaled.csv `
+    -d data/processed_data/X_test_scaled.csv `
+    -d data/processed_data/y_train.csv `
+    -d data/processed_data/y_test.csv `
+    -o models/best_params.pkl `
+    python src/models/grid_search.py
