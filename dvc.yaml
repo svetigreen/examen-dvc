@@ -45,5 +45,5 @@ stages:
     - models/best_model.pkl
     - src/models/evaluate.py
     outs:
-    - metrics/prediction.csv
+    - data/prediction.csv
     - metrics/scores.json

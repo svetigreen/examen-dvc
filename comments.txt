@@ -60,6 +60,6 @@ dvc stage add -n evaluate `
     -d data/processed_data/y_test.csv `
     -d models/best_model.pkl `
     -o metrics/scores.json `
-    -o metrics/prediction.csv `
+    -o data/prediction.csv `
     python src/models/evaluate.py
 
