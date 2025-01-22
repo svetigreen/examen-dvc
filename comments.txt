@@ -43,3 +43,12 @@ dvc stage add -n gridsearch `
     -o models/best_params.pkl `
     python src/models/grid_search.py
 
+4th stage:
+dvc stage add -n training `
+    -d src/models/train.py `
+    -d data/processed_data/X_train_scaled.csv `
+    -d data/processed_data/y_train.csv `
+    -d models/best_params.pkl `
+    -d params.yaml `
+    -o models/best_model.pkl `
+    python src/models/train.py
