@@ -1,0 +1,33 @@
+Steps
+
+1. The repo was forked from https://github.com/DataScientest-Studio/examen-dvc
+to my own github and cloned
+
+2. The raw data was obtained using src/data/import_raw_data.py script 
+URL: https://datascientest-mlops.s3.eu-west-1.amazonaws.com/mlops_dvc_fr/raw.csv
+
+3. Connected my DagsHub to the GitHub repo
+
+4. Setup dvc / dvc remote origin using s3
+
+5. Create python scripts.
+
+6. Pipeline:
+1st stage: 
+dvc stage add -n split `
+    -d src/data/make_dataset.py `
+    -d data/raw_data/raw.csv `
+    -o data/processed_data/X_train.csv `
+    -o data/processed_data/X_test.csv `
+    -o data/processed_data/y_train.csv `
+    -o data/processed_data/y_test.csv `
+    python src/data/make_dataset.py data/raw_data data/processed_data
+
+2nd stage:
+dvc stage add -n normalize `
+    -d src/data/normalize_data.py `
+    -d data/processed_data/X_train.csv `
+    -d data/processed_data/X_test.csv `
+    -o data/processed_data/X_train_scaled.csv `
+    -o data/processed_data/X_test_scaled.csv `
+    python src/data/normalize_data.py data/processed_data data/processed_data
