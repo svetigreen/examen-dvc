@@ -52,3 +52,14 @@ dvc stage add -n training `
     -d params.yaml `
     -o models/best_model.pkl `
     python src/models/train.py
+
+5th stage:
+dvc stage add -n evaluate `
+    -d src/models/evaluate.py `
+    -d data/processed_data/X_test_scaled.csv `
+    -d data/processed_data/y_test.csv `
+    -d models/best_model.pkl `
+    -o metrics/scores.json `
+    -o metrics/prediction.csv `
+    python src/models/evaluate.py
+
